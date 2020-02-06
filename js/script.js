@@ -1,15 +1,16 @@
 $(document).ready(function () {
   $(document).on('click', '.button', function () {
     searchFilm();
-    var risultati = $('.film > ul');
-    console.log(risultati.length);
-    if (true) {
-
-    }
+    clearSearch();
   });
   $('.search').keydown(function () {
     if (event.keyCode == 13) {
       searchFilm();
+    }
+  });
+  $('.search').keyup(function () {
+    if (event.keyCode == 13) {
+      clearSearch();
     }
   });
 });
@@ -52,4 +53,10 @@ function send (film){
       dataFilm(film);
     }
   })
+}
+function clearSearch () {
+  var risultati = $('.film > ul');
+  if (risultati.length > 0) {
+    risultati.html('')
+  }
 }
