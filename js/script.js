@@ -1,16 +1,12 @@
 $(document).ready(function () {
   $(document).on('click', '.button', function () {
+    $('.film').html('');
     searchFilm();
-    clearSearch();
-  });
-  $('.search').keydown(function () {
-    if (event.keyCode == 13) {
-      searchFilm();
-    }
   });
   $('.search').keyup(function () {
     if (event.keyCode == 13) {
-      clearSearch();
+      $('.film').html('');
+      searchFilm();
     }
   });
 });
@@ -29,7 +25,6 @@ function searchFilm() {
       success: function (data) {
         var film = data.results;
         dataFilm(film);
-        send(film);
       },
       error: function () {
         alert('errore');
@@ -46,17 +41,9 @@ function dataFilm (data) {
     var html = template(thisData);
     $('.film').append(html);
   }
-}
-function send (film){
-  $('.search').keydown(function () {
-    if (event.keyCode == 13) {
-      dataFilm(film);
-    }
-  })
-}
-function clearSearch () {
-  var risultati = $('.film > ul');
-  if (risultati.length > 0) {
-    risultati.html('')
+  if (data.length <= 0) {
+    var context = {notfound:'Nessun risultato trovato'};
+    var html = template(context);
+    $('.film').append(html);
   }
 }
