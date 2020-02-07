@@ -44,7 +44,7 @@ function dataFilm (data) {
       title: thisData.title,
       original_title: thisData.original_title,
       original_language: thisData.original_language,
-      vote_average: thisData.vote_average,
+      vote_average: vote,
       star: star(vote),
       flag: flags(thisData.original_language),
     }
