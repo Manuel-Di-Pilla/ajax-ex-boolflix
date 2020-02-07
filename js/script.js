@@ -11,6 +11,8 @@ $(document).ready(function () {
   });
 });
 
+// FUNZIONI------------------
+
 function searchFilm() {
   var ricerca = $('.search').val();
   $.ajax(
@@ -32,7 +34,6 @@ function searchFilm() {
     }
   );
 }
-
 function dataFilm (data) {
   var source = $("#entry-template").html();
   var template = Handlebars.compile(source);
@@ -43,7 +44,9 @@ function dataFilm (data) {
       title: thisData.title,
       original_title: thisData.original_title,
       original_language: thisData.original_language,
-      vote_average: vote,
+      vote_average: thisData.vote_average,
+      star: star(vote),
+      flag: flags(thisData.original_language),
     }
     var html = template(context);
     $('.film').append(html);
@@ -53,40 +56,41 @@ function dataFilm (data) {
     var html = template(context);
     $('.film').append(html);
   }
-  star(data);
 }
 function resetSearch() {
   $('.film').html('');
 }
-function star(data) {
-  for (var i = 0; i < data.length; i++) {
-    var thisList = $('ul').eq(i).find('li#voto').text();
-    var thisStar = $('ul').eq(i).find('li#voto span i');
-
-    if (thisList == 1) {
-      thisStar.eq(0).css('color', 'red').removeClass('far').addClass('fas');
+function star(voto) {
+  var somma = '';
+  for (var i = 0; i < 5; i++) {
+    if (i < voto) {
+      somma += '<i class="fas fa-star"></i>';
+    } else {
+      somma += '<i class="far fa-star"></i>';
     }
-    else if (thisList == 2) {
-      thisStar.eq(0).css('color', 'red').removeClass('far').addClass('fas');
-      thisStar.eq(1).css('color', 'red').removeClass('far').addClass('fas');
-    }
-    else if (thisList == 3) {
-      thisStar.eq(0).css('color', 'red').removeClass('far').addClass('fas');
-      thisStar.eq(1).css('color', 'red').removeClass('far').addClass('fas');
-      thisStar.eq(2).css('color', 'red').removeClass('far').addClass('fas');
-    }
-    else if (thisList == 4) {
-      thisStar.eq(0).css('color', 'red').removeClass('far').addClass('fas');
-      thisStar.eq(1).css('color', 'red').removeClass('far').addClass('fas');
-      thisStar.eq(2).css('color', 'red').removeClass('far').addClass('fas');
-      thisStar.eq(3).css('color', 'red').removeClass('far').addClass('fas');
-    }
-    else if (thisList == 5) {
-      thisStar.eq(0).css('color', 'red').removeClass('far').addClass('fas');
-      thisStar.eq(1).css('color', 'red').removeClass('far').addClass('fas');
-      thisStar.eq(2).css('color', 'red').removeClass('far').addClass('fas');
-      thisStar.eq(3).css('color', 'red').removeClass('far').addClass('fas');
-      thisStar.eq(4).css('color', 'red').removeClass('far').addClass('fas');
-    }
+    console.log(i);
   }
+  return somma;
+}
+function flags(lingua) {
+  var bandiera = '';
+  if (lingua == 'en') {
+    bandiera += '<img src="img/english.png" alt="">';
+  }
+  else if (lingua == 'it') {
+    bandiera += '<img src="img/italy.png" alt="">';
+  }
+  else if (lingua == 'fr') {
+    bandiera += '<img src="img/france.png" alt="">';
+  }
+  else if (lingua == 'es') {
+    bandiera += '<img src="img/spain.png" alt="">';
+  }
+  else if (lingua == 'de') {
+    bandiera += '<img src="img/germany.png" alt="">';
+  }
+  else if (lingua == 'zh') {
+    bandiera += '<img src="img/china.png" alt="">';
+  }
+  return bandiera;
 }
