@@ -62,7 +62,7 @@ function dataFilm (data, type) {
     var html = template(context);
     $('.film').append(html);
   }
-  if (data.length <= 0) {
+  if ($('.film ul').length <= 0) {
     var context = {notfound:'Nessun risultato trovato'};
     var html = template(context);
     $('.film').append(html);
