@@ -21,11 +21,12 @@
 
     <script id="entry-template" type="text/x-handlebars-template">
       <ul>
+        <li><img src="https://image.tmdb.org/t/p/w185{{poster_path}}" alt=""></li>
         <li>{{title}}</li>
         <li>{{original_title}}</li>
         <li>{{name}}</li>
         <li>{{original_name}}</li>
-        <li id="lengauges">{{original_language}} <span>{{{flag}}}</span></li>
+        <li id="lengauges">{{original_language}} <span><img src="img/{{nazione}}.png" alt=""></span></li>
         <li>{{type}}</li>
         <li>{{vote_average}} <span>{{{star}}}</span></li>
         <li>{{notfound}}</li>

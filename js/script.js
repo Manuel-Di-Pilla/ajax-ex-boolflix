@@ -56,8 +56,9 @@ function dataFilm (data, type) {
       original_language: thisData.original_language,
       vote_average: thisData.vote_average,
       star: star(vote),
-      flag: flags(thisData.original_language),
       type: type,
+      poster_path: thisData.poster_path,
+      nazione: thisData.original_language,
     }
     var html = template(context);
     $('.film').append(html);
@@ -81,26 +82,4 @@ function star(voto) {
     }
   }
   return somma;
-}
-function flags(lingua) {
-  var bandiera = '';
-  if (lingua == 'en') {
-    bandiera += '<img src="img/english.png" alt="">';
-  }
-  else if (lingua == 'it') {
-    bandiera += '<img src="img/italy.png" alt="">';
-  }
-  else if (lingua == 'fr') {
-    bandiera += '<img src="img/france.png" alt="">';
-  }
-  else if (lingua == 'es') {
-    bandiera += '<img src="img/spain.png" alt="">';
-  }
-  else if (lingua == 'de') {
-    bandiera += '<img src="img/germany.png" alt="">';
-  }
-  else if (lingua == 'zh') {
-    bandiera += '<img src="img/china.png" alt="">';
-  }
-  return bandiera;
 }
