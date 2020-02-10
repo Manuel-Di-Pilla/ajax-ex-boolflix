@@ -107,20 +107,6 @@ function dataFilm (data, type) {
       $('.serie').append(html);
     }
   }
-  if (type == 'Film') {
-    var source = $("#genere-template").html();
-    var template = Handlebars.compile(source);
-    var genere = {genere: 'Film'};
-    var html = template(genere);
-    $('.film').prepend(html);
-  }
-  if (type == 'Serie Tv') {
-    var source = $("#genere-template").html();
-    var template = Handlebars.compile(source);
-    var genere = {genere: 'Serie Tv'};
-    var html = template(genere);
-    $('.serie').prepend(html);
-  }
   $('.search').val('');
 }
 function resetSearch() {
