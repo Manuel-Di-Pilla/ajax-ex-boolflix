@@ -11,26 +11,31 @@
   <body>
 
     <header>
-      <input type="text" name="" value="" class="search">
-      <input type="button" name="" value="vai" class="button">
+      <h1>BoolFlix</h1>
+      <div class="input">
+        <input type="text" name="" value="" class="search">
+        <input type="button" name="" value="Cerca" class="button">
+      </div>
     </header>
 
-    <div class="film">
+    <section class="container">
+      <div class="film">
 
-    </div>
+      </div>
+      <div class="serie">
+
+      </div>
+    </section>
 
     <script id="entry-template" type="text/x-handlebars-template">
-      <ul>
-        <li><img src="https://image.tmdb.org/t/p/w185{{poster_path}}" alt=""></li>
-        <li>{{title}}</li>
-        <li>{{original_title}}</li>
-        <li>{{name}}</li>
-        <li>{{original_name}}</li>
-        <li id="lengauges">{{original_language}} <span><img src="img/{{nazione}}.png" alt=""></span></li>
-        <li>{{type}}</li>
-        <li>{{vote_average}} <span>{{{star}}}</span></li>
-        <li>{{notfound}}</li>
-      </ul>
+        <ul>
+          <li><img src="{{poster_path}}" alt=""></li>
+          <!-- <li>{{title}}</li>
+          <li id="lengauges">{{original_language}} <span><img src="img/{{nazione}}.png" alt=""></span></li>
+          <li>{{type}}</li>
+          <li>{{vote_average}} <span>{{{star}}}</span></li>
+          <li>{{notfound}}</li> -->
+        </ul>
     </script>
 
     <script src="js/script.js" charset="utf-8"></script>

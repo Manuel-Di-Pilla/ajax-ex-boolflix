@@ -19,6 +19,9 @@ function search() {
   var typeTV = 'Serie Tv';
   searchFilmTv(urlFilm, typeFilm);
   searchFilmTv(urlTv, typeTV);
+  if ($('.search').val().length == 0) {
+    alert('inserisci una parola chiave');
+  }
 }
 
 function searchFilmTv(url, type) {
@@ -37,7 +40,7 @@ function searchFilmTv(url, type) {
         dataFilm(film, type);
       },
       error: function () {
-        alert('errore');
+
       }
     }
   );
@@ -45,32 +48,65 @@ function searchFilmTv(url, type) {
 function dataFilm (data, type) {
   var source = $("#entry-template").html();
   var template = Handlebars.compile(source);
+  var original_title;
+  var title;
+  var categoria;
   for (var i = 0; i < data.length; i++) {
     var thisData = data[i];
+    if (type == 'Film') {
+      original_title = thisData.original_title;
+      title = thisData.title;
+    } else if (type == 'Serie Tv') {
+      original_title = thisData.original_name;
+      title = thisData.name;
+    }
+    var urlImg = 'https://image.tmdb.org/t/p/w185';
+    var img = thisData.poster_path;
+    var poster = urlImg + img;
+    if (thisData.poster_path == null) {
+      img = '/4Ghn0LSESaPZUFIhgQKrCMfluwm.jpg';
+      poster = urlImg + img;
+    }
     var vote = Math.ceil(thisData.vote_average / 2);
+    var nazione = thisData.original_language;
+    if (nazione != 'it' && nazione != 'de' && nazione != 'en' && nazione != 'es' && nazione != 'fr' && nazione != 'zh') {
+      nazione = 'world';
+    }
     var context = {
-      title: thisData.title,
-      original_title: thisData.original_title,
-      name: thisData.name,
-      original_name: thisData.original_name,
+      title: title,
       original_language: thisData.original_language,
-      vote_average: thisData.vote_average,
+      vote_average: vote,
       star: star(vote),
       type: type,
-      poster_path: thisData.poster_path,
-      nazione: thisData.original_language,
+      poster_path: poster,
+      nazione: nazione,
     }
     var html = template(context);
-    $('.film').append(html);
+    if (type == 'Film') {
+      $('.film').append(html);
+    } else if (type == 'Serie Tv') {
+      $('.serie').append(html);
+    }
   }
-  if ($('.film ul').length <= 0) {
-    var context = {notfound:'Nessun risultato trovato'};
-    var html = template(context);
-    $('.film').append(html);
+  if (type == 'Film') {
+    if ($('.film ul').length <= 0) {
+      var context = {notfound:'Nessun film trovato'};
+      var html = template(context);
+      $('.film').append(html);
+    }
   }
+  if (type == 'Serie Tv') {
+    if ($('.serie ul').length <= 0) {
+      var context = {notfound:'Nessuna serie trovata'};
+      var html = template(context);
+      $('.serie').append(html);
+    }
+  }
+  $('.search').val('');
 }
 function resetSearch() {
   $('.film').html('');
+  $('.serie').html('');
 }
 function star(voto) {
   var somma = '';
