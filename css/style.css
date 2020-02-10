@@ -29,20 +29,47 @@ header .input .button{
 .container{
   width: 100%;
 }
-.film ul, .serie ul{
+.film .copertina, .serie .copertina{
   list-style-type: none;
   float: left;
-  width: 185px;
+  width: 200px;
   height: 278px;
+  margin: 5px 6px;
+  position: relative;
 }
-.film ul li, .serie ul li{
+.film .copertina #copertina-film, .serie .copertina #copertina-film{
+  height: 278px;
+  width: 200px;
+}
+.film .copertina #copertina-film img, .serie #copertina-film li img{
   height: 100%;
   width: 100%;
-  padding: 10px;
 }
-.film ul li img, .serie ul li img{
-  height: 100%;
+.specifiche{
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  list-style-type: none;
   width: 100%;
+  height: 100%;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  overflow-y: auto;
+}
+.specifiche li{
+  margin-bottom: 20px;
+}
+.specifiche li span{
+  color: red;
+}
+.specifiche li #star{
+  color: gold;
+}
+.copertina:hover .specifiche{
+  display: block;
 }
 .none{
   display: none;

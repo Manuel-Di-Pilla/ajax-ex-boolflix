@@ -53,6 +53,10 @@ function dataFilm (data, type) {
   var categoria;
   for (var i = 0; i < data.length; i++) {
     var thisData = data[i];
+    var trama = thisData.overview;
+    if (trama.length <= 0) {
+      trama = 'non disponibile';
+    }
     if (type == 'Film') {
       original_title = thisData.original_title;
       title = thisData.title;
@@ -80,6 +84,7 @@ function dataFilm (data, type) {
       type: type,
       poster_path: poster,
       nazione: nazione,
+      overview: trama,
     }
     var html = template(context);
     if (type == 'Film') {
@@ -101,6 +106,20 @@ function dataFilm (data, type) {
       var html = template(context);
       $('.serie').append(html);
     }
+  }
+  if (type == 'Film') {
+    var source = $("#genere-template").html();
+    var template = Handlebars.compile(source);
+    var genere = {genere: 'Film'};
+    var html = template(genere);
+    $('.film').prepend(html);
+  }
+  if (type == 'Serie Tv') {
+    var source = $("#genere-template").html();
+    var template = Handlebars.compile(source);
+    var genere = {genere: 'Serie Tv'};
+    var html = template(genere);
+    $('.serie').prepend(html);
   }
   $('.search').val('');
 }

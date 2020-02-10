@@ -28,14 +28,21 @@
     </section>
 
     <script id="entry-template" type="text/x-handlebars-template">
-        <ul>
-          <li><img src="{{poster_path}}" alt=""></li>
-          <!-- <li>{{title}}</li>
-          <li id="lengauges">{{original_language}} <span><img src="img/{{nazione}}.png" alt=""></span></li>
-          <li>{{type}}</li>
-          <li>{{vote_average}} <span>{{{star}}}</span></li>
-          <li>{{notfound}}</li> -->
+      <ul class="copertina">
+        <li id="copertina-film"><img src="{{poster_path}}" alt=""></li>
+        <ul class="specifiche">
+          <li><span>Titolo:</span> {{title}}</li>
+          <li id="lengauges"><span>Lingua:</span> {{original_language}} <span><img src="img/{{nazione}}.png" alt=""></span></li>
+          <li><span>Tipo:</span> {{type}}</li>
+          <li><span>Voto:</span> {{vote_average}} <span id="star">{{{star}}}</span></li>
+          <li><span class="trama">Trama: </span>{{overview}}</li>
+          <li>{{notfound}}</li>
         </ul>
+      </ul>
+    </script>
+
+    <script id="genere-template" type="text/x-handlebars-template">
+      <h2>{{genere}}</h2>
     </script>
 
     <script src="js/script.js" charset="utf-8"></script>
