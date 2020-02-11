@@ -40,7 +40,7 @@ header .input .button{
 .film .copertina, .serie .copertina{
   list-style-type: none;
   width: calc(20% - 20px);
-  height: 10%;
+  height: 15%;
   margin: 10px;
   position: relative;
 }

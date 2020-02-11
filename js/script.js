@@ -60,7 +60,6 @@ function dataFilm (data, type, results, urlActor) {
   var original_title;
   var title;
   var categoria;
-  var arrayId = [];
   for (var i = 0; i < data.length; i++) {
     var thisData = data[i];
     var trama = thisData.overview;
@@ -103,39 +102,40 @@ function dataFilm (data, type, results, urlActor) {
     } else if (type == 'Serie Tv') {
       $('.serie').append(html);
     }
-    arrayId.push(thisData.id)
+
+    getDetails(thisData.id, urlActor);
   }
-    for (var i = 0; i < arrayId.length; i++) {
-      var id = arrayId[i];
-      $.ajax(
-        {
-          url: "https://api.themoviedb.org/3/"+urlActor+"/"+id+"/credits",
-          method: 'GET',
-          data: {
-            api_key: '37d5c5ef82f75ce59c3d75b9a0da47e4',
-          },
-          success: function (data) {
-            var cast = data.cast;
-            var source = $("#cast-template").html();
-            var template = Handlebars.compile(source);
-            var totCast = [];
-            for (var i = 0; i < 5; i++) {
-              totCast.push(cast[i].name);
+
+  function getDetails(id, type) {
+    $.ajax(
+      {
+        url: "https://api.themoviedb.org/3/"+type+"/"+ id +"/credits",
+        method: 'GET',
+        data: {
+          api_key: '37d5c5ef82f75ce59c3d75b9a0da47e4',
+        },
+        success: function (data) {
+          var cast = data.cast;
+          if (cast.length > 0) {
+            if (cast.length > 5) {
+              cast = cast.slice(0, 5);
             }
-            var context = {cast: totCast};
-            var html = template(context);
-            if (urlActor == 'movie') {
-              $('.film .specifiche').append(html);
-            } else if (urlActor == 'tv') {
-              $('.serie .specifiche').append(html);
+            var card = $('.specifiche[data-movie-id = "'+id+'"]');
+            var item = '<li> <span> Cast: </span>';
+            for (var i = 0; i < cast.length; i++) {
+              console.log(i + ", " +cast[i]);
+              item += cast[i].name + ', ';
             }
-          },
-          error: function () {
-            console.log('errore');
-          },
-        }
-      )
-    }
+            item += '</li>';
+            card.append(item);
+          }
+        },
+        error: function () {
+          console.log('errore');
+        },
+      }
+    );
+  }
 
   if (type == 'Film') {
     if (results == 0) {
@@ -196,11 +196,3 @@ function star(voto) {
   }
   return somma;
 }
-
-// var context = {cast: totCast[i]};
-// var html = template(context);
-// if (urlActor == 'movie') {
-//   $('.film .specifiche').append(html);
-// } else if (urlActor == 'tv') {
-//   $('.serie .specifiche').append(html);
-// }
