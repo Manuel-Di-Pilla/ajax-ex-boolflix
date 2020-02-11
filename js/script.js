@@ -95,7 +95,6 @@ function dataFilm (data, type, results, urlActor) {
       nazione: nazione,
       overview: trama,
       data: thisData.id,
-      genere: thisData.genre_ids,
     }
     var html = template(context);
     if (type == 'Film') {
@@ -104,8 +103,8 @@ function dataFilm (data, type, results, urlActor) {
       $('.serie').append(html);
     }
     getDetails(thisData.id, urlActor);
+    getGenere(thisData.genre_ids, thisData.id);
   }
-  getGenere();
 
   function getDetails(id, type) {
     $.ajax(
@@ -137,23 +136,14 @@ function dataFilm (data, type, results, urlActor) {
     );
   }
 
-  function getGenere() {
-    $.ajax(
-      {
-        url: 'https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=37d5c5ef82f75ce59c3d75b9a0da47e4',
-        method: 'GET',
-        success: function (data) {
-          for (var i = 0; i < data.genres.length; i++) {
-            console.log(data.genres[i]);
-          }
-        },
-        error: function () {
-          console.log('errore');
-        }
-      }
-    )
+  function getGenere(data, id) {
+    var liGenere = $('.specifiche[data-movie-id = "'+id+'"]');
+    for (var i = 0; i < data.length; i++) {
+      var counter = i+1;
+      var element = '<li> <span> Genere '+ counter + ': </span>' + data[i] + '</li>';
+      liGenere.append(element);
+    }
   }
-
   if (type == 'Film') {
     if (results == 0) {
       var context = {notfound:'Nessun film trovato'};
