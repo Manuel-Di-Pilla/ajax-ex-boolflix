@@ -14,17 +14,24 @@
       <h1>BoolFlix</h1>
       <div class="input">
         <input type="text" name="" value="" class="search">
-        <input type="button" name="" value="Cerca" class="button">
+        <input type="button" name="" value="cerca" class="button">
       </div>
     </header>
 
     <section class="container">
+
+      <div class="classe-film"></div>
+
       <div class="film">
 
       </div>
+
+      <div class="classe-serie"></div>
+
       <div class="serie">
 
       </div>
+      
     </section>
 
     <script id="entry-template" type="text/x-handlebars-template">
@@ -36,11 +43,16 @@
           <li><span>Tipo:</span> {{type}}</li>
           <li><span>Voto:</span> {{vote_average}} <span id="star">{{{star}}}</span></li>
           <li><span class="trama">Trama: </span>{{overview}}</li>
-          <li>{{notfound}}</li>
         </ul>
+      </ul>
+      <ul class="not-found">
+        <li>{{notfound}}</li>
       </ul>
     </script>
 
+    <script id="classe-template" type="text/x-handlebars-template">
+      <h2>{{classe}}</h2>
+    </script>
 
     <script src="js/script.js" charset="utf-8"></script>
   </body>

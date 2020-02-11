@@ -29,9 +29,16 @@ header .input .button{
 .container{
   width: 100%;
 }
+.classe-film, .classe-serie{
+  font-size: 30px;
+  text-align: center;
+}
+.film, .serie{
+  display: flex;
+  flex-wrap: wrap;
+}
 .film .copertina, .serie .copertina{
   list-style-type: none;
-  float: left;
   width: 200px;
   height: 278px;
   margin: 5px 6px;
@@ -70,6 +77,10 @@ header .input .button{
 }
 .copertina:hover .specifiche{
   display: block;
+}
+.not-found{
+  margin: 10px 5px;
+  font-size: 20px;
 }
 .none{
   display: none;

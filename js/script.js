@@ -37,7 +37,7 @@ function searchFilmTv(url, type) {
       },
       success: function (data) {
         var film = data.results;
-        dataFilm(film, type);
+        dataFilm(film, type, data.total_results);
       },
       error: function () {
 
@@ -45,7 +45,8 @@ function searchFilmTv(url, type) {
     }
   );
 }
-function dataFilm (data, type) {
+
+function dataFilm (data, type, results) {
   var source = $("#entry-template").html();
   var template = Handlebars.compile(source);
   var original_title;
@@ -93,26 +94,55 @@ function dataFilm (data, type) {
       $('.serie').append(html);
     }
   }
+
   if (type == 'Film') {
-    if ($('.film ul').length <= 0) {
+    if (results == 0) {
       var context = {notfound:'Nessun film trovato'};
       var html = template(context);
       $('.film').append(html);
+      $('.film ul.copertina').hide();
+      $('.classe-film').hide();
+      $('.film ul.not-found').show();
+    } else {
+      $('.film ul.not-found').hide();
+      $('.film ul.copertina').show();
+      $('.classe-film').show();
     }
+    var source = $("#classe-template").html();
+    var template = Handlebars.compile(source);
+    var context = {classe: 'Film'};
+    var html = template(context);
+    $('.classe-film').prepend(html);
   }
   if (type == 'Serie Tv') {
-    if ($('.serie ul').length <= 0) {
+    if (results == 0) {
       var context = {notfound:'Nessuna serie trovata'};
       var html = template(context);
       $('.serie').append(html);
+      $('.serie ul.copertina').hide();
+      $('.serie ul.not-found').show();
+      $('.classe-serie').hide();
+    } else{
+      $('.serie ul.not-found').hide();
+      $('.serie ul.copertina').show();
+      $('.classe-serie').show();
     }
+    var source = $("#classe-template").html();
+    var template = Handlebars.compile(source);
+    var context = {classe: 'Serie Tv'};
+    var html = template(context);
+    $('.classe-serie').prepend(html);
   }
   $('.search').val('');
 }
+
 function resetSearch() {
   $('.film').html('');
   $('.serie').html('');
+  $('.classe-film').html('');
+  $('.classe-serie').html('');
 }
+
 function star(voto) {
   var somma = '';
   for (var i = 0; i < 5; i++) {
