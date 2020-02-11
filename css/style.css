@@ -39,16 +39,16 @@ header .input .button{
 }
 .film .copertina, .serie .copertina{
   list-style-type: none;
-  width: 200px;
-  height: 278px;
-  margin: 5px 6px;
+  width: calc(20% - 20px);
+  height: 10%;
+  margin: 10px;
   position: relative;
 }
 .film .copertina #copertina-film, .serie .copertina #copertina-film{
   height: 278px;
-  width: 200px;
+  width: 100%;
 }
-.film .copertina #copertina-film img, .serie #copertina-film li img{
+.film .copertina #copertina-film img, .serie .copertina #copertina-film img{
   height: 100%;
   width: 100%;
 }

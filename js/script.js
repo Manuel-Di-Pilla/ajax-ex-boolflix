@@ -9,6 +9,12 @@ $(document).ready(function () {
       search();
     }
   });
+  $(".search").on("focus", function() {
+  $(this).attr("placeholder", "");
+  });
+  $(".search").on("blur", function() {
+    $(this).attr("placeholder", "Inserisci un titolo");
+  });
 });
 
 // FUNZIONI------------------
@@ -17,14 +23,16 @@ function search() {
   var urlTv = 'https://api.themoviedb.org/3/search/tv';
   var typeFilm = 'Film';
   var typeTV = 'Serie Tv';
-  searchFilmTv(urlFilm, typeFilm);
-  searchFilmTv(urlTv, typeTV);
+  var urlActorFilm = 'movie';
+  var urlActorTv = 'tv';
+  searchFilmTv(urlFilm, typeFilm, urlActorFilm);
+  searchFilmTv(urlTv, typeTV, urlActorTv);
   if ($('.search').val().length == 0) {
     alert('inserisci una parola chiave');
   }
 }
 
-function searchFilmTv(url, type) {
+function searchFilmTv(url, type, urlActor) {
   var ricerca = $('.search').val();
   $.ajax(
     {
@@ -37,21 +45,22 @@ function searchFilmTv(url, type) {
       },
       success: function (data) {
         var film = data.results;
-        dataFilm(film, type, data.total_results);
+        dataFilm(film, type, data.total_results, urlActor);
       },
       error: function () {
-
+        console.log('errore');
       }
     }
   );
 }
 
-function dataFilm (data, type, results) {
+function dataFilm (data, type, results, urlActor) {
   var source = $("#entry-template").html();
   var template = Handlebars.compile(source);
   var original_title;
   var title;
   var categoria;
+  var arrayId = [];
   for (var i = 0; i < data.length; i++) {
     var thisData = data[i];
     var trama = thisData.overview;
@@ -86,6 +95,7 @@ function dataFilm (data, type, results) {
       poster_path: poster,
       nazione: nazione,
       overview: trama,
+      data: thisData.id,
     }
     var html = template(context);
     if (type == 'Film') {
@@ -93,7 +103,39 @@ function dataFilm (data, type, results) {
     } else if (type == 'Serie Tv') {
       $('.serie').append(html);
     }
+    arrayId.push(thisData.id)
   }
+    for (var i = 0; i < arrayId.length; i++) {
+      var id = arrayId[i];
+      $.ajax(
+        {
+          url: "https://api.themoviedb.org/3/"+urlActor+"/"+id+"/credits",
+          method: 'GET',
+          data: {
+            api_key: '37d5c5ef82f75ce59c3d75b9a0da47e4',
+          },
+          success: function (data) {
+            var cast = data.cast;
+            var source = $("#cast-template").html();
+            var template = Handlebars.compile(source);
+            var totCast = [];
+            for (var i = 0; i < 5; i++) {
+              totCast.push(cast[i].name);
+            }
+            var context = {cast: totCast};
+            var html = template(context);
+            if (urlActor == 'movie') {
+              $('.film .specifiche').append(html);
+            } else if (urlActor == 'tv') {
+              $('.serie .specifiche').append(html);
+            }
+          },
+          error: function () {
+            console.log('errore');
+          },
+        }
+      )
+    }
 
   if (type == 'Film') {
     if (results == 0) {
@@ -154,3 +196,11 @@ function star(voto) {
   }
   return somma;
 }
+
+// var context = {cast: totCast[i]};
+// var html = template(context);
+// if (urlActor == 'movie') {
+//   $('.film .specifiche').append(html);
+// } else if (urlActor == 'tv') {
+//   $('.serie .specifiche').append(html);
+// }

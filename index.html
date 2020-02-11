@@ -13,8 +13,8 @@
     <header>
       <h1>BoolFlix</h1>
       <div class="input">
-        <input type="text" name="" value="" class="search">
-        <input type="button" name="" value="cerca" class="button">
+        <input type="text" name="" value="" class="search" placeholder="Cerca...">
+        <input type="button" name="" value="Vai" class="button">
       </div>
     </header>
 
@@ -31,11 +31,11 @@
       <div class="serie">
 
       </div>
-      
+
     </section>
 
     <script id="entry-template" type="text/x-handlebars-template">
-      <ul class="copertina">
+      <ul class="copertina" data = '{{data}}'>
         <li id="copertina-film"><img src="{{poster_path}}" alt=""></li>
         <ul class="specifiche">
           <li><span>Titolo:</span> {{title}}</li>
@@ -52,6 +52,10 @@
 
     <script id="classe-template" type="text/x-handlebars-template">
       <h2>{{classe}}</h2>
+    </script>
+
+    <script id="cast-template" type="text/x-handlebars-template">
+      <li>Cast: {{cast}}</li>
     </script>
 
     <script src="js/script.js" charset="utf-8"></script>
