@@ -95,6 +95,7 @@ function dataFilm (data, type, results, urlActor) {
       nazione: nazione,
       overview: trama,
       data: thisData.id,
+      genere: thisData.genre_ids,
     }
     var html = template(context);
     if (type == 'Film') {
@@ -102,9 +103,9 @@ function dataFilm (data, type, results, urlActor) {
     } else if (type == 'Serie Tv') {
       $('.serie').append(html);
     }
-
     getDetails(thisData.id, urlActor);
   }
+  getGenere();
 
   function getDetails(id, type) {
     $.ajax(
@@ -123,7 +124,6 @@ function dataFilm (data, type, results, urlActor) {
             var card = $('.specifiche[data-movie-id = "'+id+'"]');
             var item = '<li> <span> Cast: </span>';
             for (var i = 0; i < cast.length; i++) {
-              console.log(i + ", " +cast[i]);
               item += cast[i].name + ', ';
             }
             item += '</li>';
@@ -135,6 +135,23 @@ function dataFilm (data, type, results, urlActor) {
         },
       }
     );
+  }
+
+  function getGenere() {
+    $.ajax(
+      {
+        url: 'https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=37d5c5ef82f75ce59c3d75b9a0da47e4',
+        method: 'GET',
+        success: function (data) {
+          for (var i = 0; i < data.genres.length; i++) {
+            console.log(data.genres[i]);
+          }
+        },
+        error: function () {
+          console.log('errore');
+        }
+      }
+    )
   }
 
   if (type == 'Film') {
