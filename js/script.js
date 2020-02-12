@@ -103,7 +103,7 @@ function dataFilm (data, type, results, urlActor) {
       $('.serie').append(html);
     }
     getDetails(thisData.id, urlActor);
-    getGenere(thisData.genre_ids, thisData.id);
+    getGenere(thisData.genre_ids, thisData.id, urlActor);
   }
 
   function getDetails(id, type) {
@@ -123,7 +123,7 @@ function dataFilm (data, type, results, urlActor) {
             var card = $('.specifiche[data-movie-id = "'+id+'"]');
             var item = '<li> <span> Cast: </span>';
             for (var i = 0; i < cast.length; i++) {
-              item += cast[i].name + ', ';
+              item += cast[i].name + ' ,';
             }
             item += '</li>';
             card.append(item);
@@ -136,13 +136,27 @@ function dataFilm (data, type, results, urlActor) {
     );
   }
 
-  function getGenere(data, id) {
-    var liGenere = $('.specifiche[data-movie-id = "'+id+'"]');
-    for (var i = 0; i < data.length; i++) {
-      var counter = i+1;
-      var element = '<li> <span> Genere '+ counter + ': </span>' + data[i] + '</li>';
-      liGenere.append(element);
-    }
+  function getGenere(data, id, type) {
+    $.ajax(
+      {
+        url: 'https://api.themoviedb.org/3/genre/'+type+'/list?language=it-IT&api_key=37d5c5ef82f75ce59c3d75b9a0da47e4',
+        method: 'GET',
+        success: function (gen) {
+          var liGenere = $('.specifiche[data-movie-id = "'+id+'"]');
+          var element = '<li> <span> Genere : </span>';
+          for (var i = 0; i < gen.genres.length; i++) {
+            if (data.includes(gen.genres[i].id)) {
+              element += gen.genres[i].name + ', ';
+            }
+          }
+          element += '</li>'
+          liGenere.append(element);
+        },
+        error: function () {
+          console.log('errore');
+        },
+      }
+    )
   }
   if (type == 'Film') {
     if (results == 0) {
